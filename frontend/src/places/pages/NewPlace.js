@@ -6,8 +6,7 @@ import Button from '../../shared/components/FormElements/Button';
 import ErrorModal from '../../shared/components/UIElements/ErrorModal';
 import LoadingSpinner from '../../shared/components/UIElements/LoadingSpinner';
 import {
-  VALIDATOR_REQUIRE,
-  VALIDATOR_MINLENGTH
+  VALIDATOR_REQUIRE
 } from '../../shared/util/validators';
 import { useForm } from '../../shared/hooks/form-hook';
 import { useHttpClient } from '../../shared/hooks/http-hook';
@@ -23,11 +22,27 @@ const NewPlace = () => {
         value: '',
         isValid: false
       },
-      description: {
+      quantity: {
         value: '',
         isValid: false
       },
-      address: {
+      upccode: {
+        value: '',
+        isValid: false
+      },
+      location: {
+        value: '',
+        isValid: false
+      },
+      creator: {
+        value: '',
+        isValid: false
+      },
+      time: {
+        value: '',
+        isValid: false
+      },
+      date: {
         value: '',
         isValid: false
       }
@@ -73,7 +88,7 @@ const NewPlace = () => {
           id="quantity"
           element="number"
           label="Quantity"
-          validators={[VALIDATOR_MINLENGTH(5)]}
+          validators={[VALIDATOR_REQUIRE]}
           errorText="Please enter a valid quantity"
           onInput={inputHandler}
         />

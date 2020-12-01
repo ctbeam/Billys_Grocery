@@ -1,0 +1,7 @@
+{
+    "env": {
+        "DB_USER": "cameron",
+        "DB_PASSWORD": "cameron.beam",
+        "DB_NAME": "billys_gorcery"
+    }
+}
