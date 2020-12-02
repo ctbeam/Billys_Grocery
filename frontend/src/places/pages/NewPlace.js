@@ -6,7 +6,7 @@ import Button from '../../shared/components/FormElements/Button';
 import ErrorModal from '../../shared/components/UIElements/ErrorModal';
 import LoadingSpinner from '../../shared/components/UIElements/LoadingSpinner';
 import {
-  VALIDATOR_REQUIRE,
+  VALIDATOR_REQUIRE
 } from '../../shared/util/validators';
 import { useForm } from '../../shared/hooks/form-hook';
 import { useHttpClient } from '../../shared/hooks/http-hook';
@@ -30,20 +30,20 @@ const NewPlace = () => {
         value: '',
         isValid: false
       },
-      location: {
-        value: null,
+      creator: {
+        value: '',
         isValid: false
       },
-      creator: {
-        value: null,
+      location: {
+        value: '',
         isValid: false
       },
       date: {
-        value: null,
+        value: '',
         isValid: false
       },
       time: {
-        value: null,
+        value: '',
         isValid: false
       }
     },
@@ -55,17 +55,20 @@ const NewPlace = () => {
   const placeSubmitHandler = async event => {
     event.preventDefault();
     try {
-      const formData = new FormData();
-      formData.append('title', formState.inputs.title.value);
-      formData.append('quantity', formState.inputs.quantity.value);
-      formData.append('upccode', formState.inputs.upccode.value);
-      formData.append('location', formState.inputs.location.value);
-      formData.append('creator', formState.inputs.creator.value);
-      formData.append('date', formState.inputs.date.value);
-      formData.append('time', formState.inputs.time.value);
-      await sendRequest('http://localhost:5000/api/places', 'POST', formData, {
-        Authorization: 'Bearer ' + auth.token
-      });
+      await sendRequest(
+        'http://localhost:5000/api/places',
+        'POST',
+        JSON.stringify({
+          title: formState.inputs.title.value,
+          quantity: formState.inputs.quantity.value,
+          upccode: formState.inputs.upccode.value,
+          creator: auth.userId,
+          location: formState.inputs.location.value,
+          date: formState.inputs.date.value,
+          time: formState.inputs.time.value,
+        }),
+        { 'Content-Type': 'application/json' }
+      );
       history.push('/');
     } catch (err) {}
   };
@@ -79,9 +82,9 @@ const NewPlace = () => {
           id="title"
           element="input"
           type="text"
-          label="Product"
+          label="Title"
           validators={[VALIDATOR_REQUIRE()]}
-          errorText="Please enter a valid product name."
+          errorText="Please enter a valid title."
           onInput={inputHandler}
         />
         <Input
@@ -97,7 +100,7 @@ const NewPlace = () => {
           element="input"
           label="UPC Code"
           validators={[VALIDATOR_REQUIRE()]}
-          errorText="Please enter a valid address."
+          errorText="Please enter a valid UPC Code."
           onInput={inputHandler}
         />
         <Input
@@ -110,10 +113,10 @@ const NewPlace = () => {
         />
         <Input
           id="creator"
-          element="input"
-          label="Employee"
+          element="textarea"
+          label="Creator"
           validators={[VALIDATOR_REQUIRE()]}
-          errorText="Please enter a valid employee name."
+          errorText="Please enter a valid creator."
           onInput={inputHandler}
         />
         <Input
@@ -121,15 +124,15 @@ const NewPlace = () => {
           element="input"
           label="Date"
           validators={[VALIDATOR_REQUIRE()]}
-          errorText="Please enter a valid location."
+          errorText="Please enter a valid date."
           onInput={inputHandler}
         />
         <Input
           id="time"
-          element="input"
+          element="textarea"
           label="Time"
           validators={[VALIDATOR_REQUIRE()]}
-          errorText="Please enter a valid address."
+          errorText="Please enter a valid time."
           onInput={inputHandler}
         />
         <Button type="submit" disabled={!formState.isValid}>

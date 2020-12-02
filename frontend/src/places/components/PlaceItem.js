@@ -14,7 +14,6 @@ const PlaceItem = props => {
   const auth = useContext(AuthContext);
   const [showConfirmModal, setShowConfirmModal] = useState(false);
 
-
   const showDeleteWarningHandler = () => {
     setShowConfirmModal(true);
   };
@@ -28,11 +27,7 @@ const PlaceItem = props => {
     try {
       await sendRequest(
         `http://localhost:5000/api/places/${props.id}`,
-        'DELETE',
-        null,
-        {
-          Authorization: 'Bearer ' + auth.token
-        }
+        'DELETE'
       );
       props.onDelete(props.id);
     } catch (err) {}
@@ -69,19 +64,22 @@ const PlaceItem = props => {
             <h2>{props.title}</h2>
             <h2>{props.quantity}</h2>
             <h2>{props.upccode}</h2>
-            <h2>{props.location}</h2>
             <h2>{props.creator}</h2>
+            <h2>{props.location}</h2>
             <h2>{props.date}</h2>
             <h2>{props.time}</h2>
           </div>
+          <div className="place-item__actions">
             {auth.userId === props.creatorId && (
               <Button to={`/places/${props.id}`}>EDIT</Button>
             )}
+
             {auth.userId === props.creatorId && (
               <Button danger onClick={showDeleteWarningHandler}>
                 DELETE
               </Button>
             )}
+          </div>
         </Card>
       </li>
     </React.Fragment>

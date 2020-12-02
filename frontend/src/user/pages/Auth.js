@@ -39,7 +39,7 @@ const Auth = () => {
       setFormData(
         {
           ...formState.inputs,
-          name: undefined,
+          name: undefined
         },
         formState.inputs.email.isValid && formState.inputs.password.isValid
       );
@@ -50,7 +50,7 @@ const Auth = () => {
           name: {
             value: '',
             isValid: false
-          },
+          }
         },
         false
       );
@@ -74,21 +74,24 @@ const Auth = () => {
             'Content-Type': 'application/json'
           }
         );
-        auth.login(responseData.userId, responseData.token);
+        auth.login(responseData.user.id);
       } catch (err) {}
     } else {
       try {
-        const formData = new FormData();
-        formData.append('email', formState.inputs.email.value);
-        formData.append('name', formState.inputs.name.value);
-        formData.append('password', formState.inputs.password.value);
         const responseData = await sendRequest(
           'http://localhost:5000/api/users/signup',
           'POST',
-          formData
+          JSON.stringify({
+            name: formState.inputs.name.value,
+            email: formState.inputs.email.value,
+            password: formState.inputs.password.value
+          }),
+          {
+            'Content-Type': 'application/json'
+          }
         );
 
-        auth.login(responseData.userId, responseData.token);
+        auth.login(responseData.user.id);
       } catch (err) {}
     }
   };
@@ -135,7 +138,7 @@ const Auth = () => {
           </Button>
         </form>
         <Button inverse onClick={switchModeHandler}>
-          SWITCH TO {isLoginMode ? 'Employee SIGNUP' : 'Admin LOGIN'}
+          SWITCH TO {isLoginMode ? 'SIGNUP' : 'LOGIN'}
         </Button>
       </Card>
     </React.Fragment>
