@@ -10,8 +10,8 @@ const PlaceList = props => {
     return (
       <div className="place-list center">
         <Card>
-          <h2>No Products found. Maybe create one?</h2>
-          <Button to="/places/new">Add New Product</Button>
+          <h2>No places found. Maybe create one?</h2>
+          <Button to="/places/new">Share Place</Button>
         </Card>
       </div>
     );
@@ -26,10 +26,10 @@ const PlaceList = props => {
           title={place.title}
           quantity={place.quantity}
           upccode={place.upccode}
-          creatorId={place.creator}
+          creator={place.creator}
           location={place.location}
-          date={place.date}
           time={place.time}
+          date={place.date}
           onDelete={props.onDeletePlace}
         />
       ))}

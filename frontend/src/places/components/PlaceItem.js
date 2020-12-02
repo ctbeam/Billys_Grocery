@@ -14,6 +14,7 @@ const PlaceItem = props => {
   const auth = useContext(AuthContext);
   const [showConfirmModal, setShowConfirmModal] = useState(false);
 
+
   const showDeleteWarningHandler = () => {
     setShowConfirmModal(true);
   };
@@ -27,7 +28,11 @@ const PlaceItem = props => {
     try {
       await sendRequest(
         `http://localhost:5000/api/places/${props.id}`,
-        'DELETE'
+        'DELETE',
+        null,
+        {
+          Authorization: 'Bearer ' + auth.token
+        }
       );
       props.onDelete(props.id);
     } catch (err) {}
@@ -53,7 +58,7 @@ const PlaceItem = props => {
         }
       >
         <p>
-          Do you want to proceed and delete this product? Please note that it
+          Do you want to proceed and delete this place? Please note that it
           can't be undone thereafter.
         </p>
       </Modal>
@@ -69,7 +74,6 @@ const PlaceItem = props => {
             <h2>{props.date}</h2>
             <h2>{props.time}</h2>
           </div>
-          <div className="place-item__actions">
             {auth.userId === props.creatorId && (
               <Button to={`/places/${props.id}`}>EDIT</Button>
             )}
@@ -78,7 +82,6 @@ const PlaceItem = props => {
                 DELETE
               </Button>
             )}
-          </div>
         </Card>
       </li>
     </React.Fragment>

@@ -2,6 +2,7 @@ const express = require('express');
 const { check } = require('express-validator');
 
 const placesControllers = require('../controllers/places-controllers');
+const checkAuth = require('../middleware/check-auth');
 
 const router = express.Router();
 
@@ -9,27 +10,30 @@ router.get('/:pid', placesControllers.getPlaceById);
 
 router.get('/user/:uid', placesControllers.getPlacesByUserId);
 
+router.use(checkAuth);
+
 router.post(
   '/',
   [
     check('title')
       .not()
       .isEmpty(),
-    check('quantity')
+      check('quantity')
       .not()
       .isEmpty(),
-    check('upccode').not()
-      .isEmpty(),
-    check('location')
+      check('upccode')
       .not()
       .isEmpty(),
-    check('creator')
+      check('location')
       .not()
       .isEmpty(),
-    check('time')
+      check('creator')
       .not()
       .isEmpty(),
-    check('date')
+      check('time')
+      .not()
+      .isEmpty(),
+      check('date')
       .not()
       .isEmpty()
   ],
@@ -42,21 +46,22 @@ router.patch(
     check('title')
       .not()
       .isEmpty(),
-    check('quantity')
+      check('quantity')
       .not()
       .isEmpty(),
-    check('upccode').not()
-      .isEmpty(),
-    check('location')
+      check('upccode')
       .not()
       .isEmpty(),
-    check('creator')
+      check('location')
       .not()
       .isEmpty(),
-    check('time')
+      check('creator')
       .not()
       .isEmpty(),
-    check('date')
+      check('time')
+      .not()
+      .isEmpty(),
+      check('date')
       .not()
       .isEmpty()
   ],

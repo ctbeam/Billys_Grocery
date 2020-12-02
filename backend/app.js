@@ -1,3 +1,5 @@
+const path = require("path");
+
 const express = require("express");
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
@@ -29,17 +31,9 @@ app.use((req, res, next) => {
   throw error;
 });
 
-app.use((error, req, res, next) => {
-  if (res.headerSent) {
-    return next(error);
-  }
-  res.status(error.code || 500);
-  res.json({ message: error.message || "An unknown error occurred!" });
-});
-
 mongoose
   .connect(
-    `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@cluster0.uovhr.mongodb.net/${process.env.DB_NAME}?retryWrites=true&w=majority`
+    `mongodb+srv://cameron:cameron.beam@cluster0.uovhr.mongodb.net/billys_gorcery?retryWrites=true&w=majority`
   )
   .then(() => {
     app.listen(5000);

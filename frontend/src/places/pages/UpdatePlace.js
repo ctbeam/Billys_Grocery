@@ -36,19 +36,19 @@ const UpdatePlace = () => {
         isValid: false
       },
       location: {
-        value: '',
+        value: null,
         isValid: false
       },
       creator: {
-        value: '',
-        isValid: false
-      },
-      time: {
-        value: '',
+        value: null,
         isValid: false
       },
       date: {
-        value: '',
+        value: null,
+        isValid: false
+      },
+      time: {
+        value: null,
         isValid: false
       }
     },
@@ -68,12 +68,12 @@ const UpdatePlace = () => {
               value: responseData.place.title,
               isValid: true
             },
-            upccode: {
-              value: responseData.place.upccode,
-              isValid: true
-            },
             quantity: {
               value: responseData.place.quantity,
+              isValid: true
+            },
+            upccode: {
+              value: responseData.place.upccode,
               isValid: true
             },
             location: {
@@ -85,17 +85,16 @@ const UpdatePlace = () => {
               isValid: true
             },
             time: {
-              value: responseData.place.time,
+              value: responseData.place.title,
               isValid: true
             },
             date: {
               value: responseData.place.date,
               isValid: true
-            }  
+            }
           },
           true
         );
-
       } catch (err) {}
     };
     fetchPlace();
@@ -117,7 +116,8 @@ const UpdatePlace = () => {
           date: formState.inputs.date.value
         }),
         {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          Authorization: 'Bearer ' + auth.token
         }
       );
       history.push('/' + auth.userId + '/places');
@@ -147,77 +147,63 @@ const UpdatePlace = () => {
       <ErrorModal error={error} onClear={clearError} />
       {!isLoading && loadedPlace && (
         <form className="place-form" onSubmit={placeUpdateSubmitHandler}>
-          <Input
-            id="title"
-            element="input"
-            type="text"
-            label="Title"
-            validators={[VALIDATOR_REQUIRE()]}
-            errorText="Please enter a valid title."
-            onInput={inputHandler}
-            initialValue={loadedPlace.title}
-            initialValid={true}
-          />
-          <Input
-            id="quantity"
-            element="textarea"
-            label="quantity"
-            validators={[VALIDATOR_REQUIRE()]}
-            errorText="Please enter a valid quantity."
-            onInput={inputHandler}
-            initialValue={loadedPlace.quantity}
-            initialValid={true}
-          />
-          <Input
-            id="upccode"
-            element="textarea"
-            label="upccode"
-            validators={[VALIDATOR_REQUIRE()]}
-            errorText="Please enter a valid UPC Code."
-            onInput={inputHandler}
-            initialValue={loadedPlace.upccode}
-            initialValid={true}
-          />
-          <Input
-            id="location"
-            element="textarea"
-            label="location"
-            validators={[VALIDATOR_REQUIRE()]}
-            errorText="Please enter a valid location."
-            onInput={inputHandler}
-            initialValue={loadedPlace.location}
-            initialValid={true}
-          />
-          <Input
-            id="creator"
-            element="textarea"
-            label="creator"
-            validators={[VALIDATOR_REQUIRE()]}
-            errorText="Please enter a valid creator."
-            onInput={inputHandler}
-            initialValue={loadedPlace.creator}
-            initialValid={true}
-          />
-          <Input
-            id="time"
-            element="textarea"
-            label="time"
-            validators={[VALIDATOR_REQUIRE()]}
-            errorText="Please enter a valid time."
-            onInput={inputHandler}
-            initialValue={loadedPlace.time}
-            initialValid={true}
-          />
-          <Input
-            id="date"
-            element="textarea"
-            label="date"
-            validators={[VALIDATOR_REQUIRE()]}
-            errorText="Please enter a valid date."
-            onInput={inputHandler}
-            initialValue={loadedPlace.date}
-            initialValid={true}
-          />
+        <Input
+          id="title"
+          element="input"
+          type="text"
+          label="Product"
+          validators={[VALIDATOR_REQUIRE()]}
+          errorText="Please enter a valid product name."
+          onInput={inputHandler}
+        />
+        <Input
+          id="quantity"
+          element="textarea"
+          label="Quantity"
+          validators={[VALIDATOR_REQUIRE()]}
+          errorText="Please enter a valid quantity."
+          onInput={inputHandler}
+        />
+        <Input
+          id="upccode"
+          element="input"
+          label="UPC Code"
+          validators={[VALIDATOR_REQUIRE()]}
+          errorText="Please enter a valid address."
+          onInput={inputHandler}
+        />
+        <Input
+          id="location"
+          element="input"
+          label="Location"
+          validators={[VALIDATOR_REQUIRE()]}
+          errorText="Please enter a valid location."
+          onInput={inputHandler}
+        />
+        <Input
+          id="creator"
+          element="input"
+          label="Employee"
+          validators={[VALIDATOR_REQUIRE()]}
+          errorText="Please enter a valid employee name."
+          onInput={inputHandler}
+        />
+        <Input
+          id="date"
+          element="input"
+          label="Date"
+          validators={[VALIDATOR_REQUIRE()]}
+          errorText="Please enter a valid location."
+          onInput={inputHandler}
+        />
+        <Input
+          id="time"
+          element="input"
+          label="Time"
+          validators={[VALIDATOR_REQUIRE()]}
+          errorText="Please enter a valid address."
+          onInput={inputHandler}
+        />
           <Button type="submit" disabled={!formState.isValid}>
             UPDATE PLACE
           </Button>

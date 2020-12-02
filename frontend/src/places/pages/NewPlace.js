@@ -6,7 +6,7 @@ import Button from '../../shared/components/FormElements/Button';
 import ErrorModal from '../../shared/components/UIElements/ErrorModal';
 import LoadingSpinner from '../../shared/components/UIElements/LoadingSpinner';
 import {
-  VALIDATOR_REQUIRE
+  VALIDATOR_REQUIRE,
 } from '../../shared/util/validators';
 import { useForm } from '../../shared/hooks/form-hook';
 import { useHttpClient } from '../../shared/hooks/http-hook';
@@ -31,19 +31,19 @@ const NewPlace = () => {
         isValid: false
       },
       location: {
-        value: '',
+        value: null,
         isValid: false
       },
       creator: {
-        value: '',
-        isValid: false
-      },
-      time: {
-        value: '',
+        value: null,
         isValid: false
       },
       date: {
-        value: '',
+        value: null,
+        isValid: false
+      },
+      time: {
+        value: null,
         isValid: false
       }
     },
@@ -55,17 +55,17 @@ const NewPlace = () => {
   const placeSubmitHandler = async event => {
     event.preventDefault();
     try {
-      await sendRequest(
-        'http://localhost:5000/api/places',
-        'POST',
-        JSON.stringify({
-          title: formState.inputs.title.value,
-          description: formState.inputs.description.value,
-          address: formState.inputs.address.value,
-          creator: auth.userId
-        }),
-        { 'Content-Type': 'application/json' }
-      );
+      const formData = new FormData();
+      formData.append('title', formState.inputs.title.value);
+      formData.append('quantity', formState.inputs.quantity.value);
+      formData.append('upccode', formState.inputs.upccode.value);
+      formData.append('location', formState.inputs.location.value);
+      formData.append('creator', formState.inputs.creator.value);
+      formData.append('date', formState.inputs.date.value);
+      formData.append('time', formState.inputs.time.value);
+      await sendRequest('http://localhost:5000/api/places', 'POST', formData, {
+        Authorization: 'Bearer ' + auth.token
+      });
       history.push('/');
     } catch (err) {}
   };
@@ -79,31 +79,31 @@ const NewPlace = () => {
           id="title"
           element="input"
           type="text"
-          label="Title"
+          label="Product"
           validators={[VALIDATOR_REQUIRE()]}
-          errorText="Please enter a valid title."
+          errorText="Please enter a valid product name."
           onInput={inputHandler}
         />
         <Input
           id="quantity"
-          element="number"
+          element="textarea"
           label="Quantity"
-          validators={[VALIDATOR_REQUIRE]}
-          errorText="Please enter a valid quantity"
+          validators={[VALIDATOR_REQUIRE()]}
+          errorText="Please enter a valid quantity."
           onInput={inputHandler}
         />
         <Input
           id="upccode"
-          element="number"
-          label="upccode"
+          element="input"
+          label="UPC Code"
           validators={[VALIDATOR_REQUIRE()]}
-          errorText="Please enter a valid UPC Code."
+          errorText="Please enter a valid address."
           onInput={inputHandler}
         />
         <Input
           id="location"
           element="input"
-          label="location"
+          label="Location"
           validators={[VALIDATOR_REQUIRE()]}
           errorText="Please enter a valid location."
           onInput={inputHandler}
@@ -111,25 +111,25 @@ const NewPlace = () => {
         <Input
           id="creator"
           element="input"
-          label="creator"
+          label="Employee"
           validators={[VALIDATOR_REQUIRE()]}
-          errorText="Please enter a valid creator."
-          onInput={inputHandler}
-        />
-        <Input
-          id="time"
-          element="input"
-          label="time"
-          validators={[VALIDATOR_REQUIRE()]}
-          errorText="Please enter a valid time."
+          errorText="Please enter a valid employee name."
           onInput={inputHandler}
         />
         <Input
           id="date"
           element="input"
-          label="date"
+          label="Date"
           validators={[VALIDATOR_REQUIRE()]}
-          errorText="Please enter a valid date."
+          errorText="Please enter a valid location."
+          onInput={inputHandler}
+        />
+        <Input
+          id="time"
+          element="input"
+          label="Time"
+          validators={[VALIDATOR_REQUIRE()]}
+          errorText="Please enter a valid address."
           onInput={inputHandler}
         />
         <Button type="submit" disabled={!formState.isValid}>
