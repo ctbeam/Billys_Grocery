@@ -101,7 +101,7 @@ const Auth = () => {
       <ErrorModal error={error} onClear={clearError} />
       <Card className="authentication">
         {isLoading && <LoadingSpinner asOverlay />}
-        <h2>Login Required</h2>
+        <h2>ADMIN Login Required</h2>
         <hr />
         <form onSubmit={authSubmitHandler}>
           {!isLoginMode && (
@@ -138,7 +138,7 @@ const Auth = () => {
           </Button>
         </form>
         <Button inverse onClick={switchModeHandler}>
-          SWITCH TO {isLoginMode ? 'SIGNUP' : 'LOGIN'}
+          SWITCH TO {isLoginMode ? 'EMPLOYEE SIGNUP' : 'ADMIN LOGIN'}
         </Button>
       </Card>
     </React.Fragment>

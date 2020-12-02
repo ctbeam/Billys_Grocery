@@ -161,7 +161,7 @@ const UpdatePlace = () => {
           <Input
             id="Location"
             element="textarea"
-            label="Locaation"
+            label="Location"
             validators={[VALIDATOR_REQUIRE()]}
             errorText="Please enter a valid Location."
             onInput={inputHandler}
