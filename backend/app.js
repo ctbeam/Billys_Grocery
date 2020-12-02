@@ -39,7 +39,7 @@ app.use((error, req, res, next) => {
 
 mongoose
   .connect(
-    `mongodb+srv://cameron:cameron.beam@cluster0.uovhr.mongodb.net/billys_gorcery?retryWrites=true&w=majority`
+    process.env.MONGODB_URI ||`mongodb+srv://cameron:cameron.beam@cluster0.uovhr.mongodb.net/billys_gorcery?retryWrites=true&w=majority`
   )
   .then(() => {
     app.listen(5000);
