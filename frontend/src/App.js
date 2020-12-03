@@ -33,6 +33,9 @@ const App = () => {
   if (isLoggedIn) {
     routes = (
       <Switch>
+        <Route path="/auth">
+          <Auth />
+        </Route>
         <Route path="/" exact>
           <Users />
         </Route>
@@ -50,18 +53,9 @@ const App = () => {
     );
   } else {
     routes = (
-      <Switch>
-        <Route path="/" exact>
-          <Users />
-        </Route>
-        <Route path="/:userId/places" exact>
-          <UserPlaces />
-        </Route>
-        <Route path="/auth">
+        <Route path="/">
           <Auth />
         </Route>
-        <Redirect to="/auth" />
-      </Switch>
     );
   }
 

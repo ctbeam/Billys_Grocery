@@ -9,9 +9,16 @@ const NavLinks = props => {
 
   return (
     <ul className="nav-links">
+    {auth.isLoggedIn && (
+      <li>
+        <NavLink to="/auth">
+          Sign Up Employee
+        </NavLink>
+      </li>
+      )}
       {auth.isLoggedIn && (
       <li>
-        <NavLink to="/" exact>
+        <NavLink to="/places" exact>
           All Employees
         </NavLink>
       </li>
@@ -26,9 +33,12 @@ const NavLinks = props => {
           <NavLink to="/places/new">Add Product</NavLink>
         </li>
       )}
+        <li>
+          <NavLink to="/auth">Admin Log In</NavLink>
+        </li>
       {!auth.isLoggedIn && (
         <li>
-          <NavLink to="/auth">Log In</NavLink>
+          <NavLink to="/auth">Employee Log In</NavLink>
         </li>
       )}
       {auth.isLoggedIn && (
@@ -36,6 +46,7 @@ const NavLinks = props => {
           <button onClick={auth.logout}>Log Out</button>
         </li>
       )}
+    
     </ul>
   );
 };

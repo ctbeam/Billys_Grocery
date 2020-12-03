@@ -137,9 +137,11 @@ const Auth = () => {
             {isLoginMode ? 'LOGIN' : 'SIGNUP'}
           </Button>
         </form>
+        {auth.isLoggedIn && (
         <Button inverse onClick={switchModeHandler}>
           SWITCH TO {isLoginMode ? 'EMPLOYEE SIGNUP' : 'ADMIN LOGIN'}
         </Button>
+        )}
       </Card>
     </React.Fragment>
   );
