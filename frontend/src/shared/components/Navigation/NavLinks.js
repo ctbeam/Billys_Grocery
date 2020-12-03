@@ -9,11 +9,13 @@ const NavLinks = props => {
 
   return (
     <ul className="nav-links">
+      {auth.isLoggedIn && (
       <li>
         <NavLink to="/" exact>
           All Employees
         </NavLink>
       </li>
+      )}
       {auth.isLoggedIn && (
         <li>
           <NavLink to={`/${auth.userId}/places`}>Products Added</NavLink>
